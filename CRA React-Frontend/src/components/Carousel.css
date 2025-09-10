@@ -1,0 +1,44 @@
+.carousel {
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  margin-top: 2400px;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100vw;
+}
+
+.slide img {
+  width: 100%;
+  /* height: 100vh; Ou ajuste conforme necessário para a altura */
+  object-fit: contain; /* Garantir que a imagem cubra toda a tela sem cortar */
+}
+
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot:hover,
+.active {
+  background: yellow;
+}

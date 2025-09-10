@@ -1,0 +1,130 @@
+/* ViaAlguem.module.css */
+.contentcentralVIALG {
+  height: 180vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--background-color);
+  margin-top: 300px;
+}
+
+.contentprincipalVIALG {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 650px;
+  height: 280px;
+  margin-top: 580px;
+}
+
+.tituloContentVIALG {
+  color: var(--black-color);
+  padding: 15px;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.subTituloContentVIALG {
+  color: var(--color-neutral-15);
+  font-size: 16px;
+  font-weight: normal;
+  padding: 20px;
+}
+
+.campoinformarpista {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 100px;
+}
+
+.campoInforma {
+  width: 650px;
+  height: 50px;
+  font-size: 16px;
+  padding-left: 15px;
+  margin-top: 5px;
+}
+
+.campoInforma::placeholder {
+  color: var(--primary-color);
+}
+
+.campoImagem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.campoFoto {
+  display: none;
+}
+
+.caixaFoto {
+  background-color: var(--quad-color);
+  color: var(--white-color);
+  font-size: 16px;
+  padding: 20px;
+  width: 650px;
+  text-align: center;
+  font-weight: normal;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  height: 300px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.caixaFoto:hover {
+  background-color: var(--primary-color);
+}
+
+.caixaFoto span {
+  display: inline-block;
+  line-height: 1.4;
+  font-size: 20px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.campoAnonimo {
+  margin-top: 15px;
+  font-size: 16px;
+  color: var(--black-color);
+  display: flex;
+  align-items: center;
+}
+
+.campoAnonimo input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.btnEnviar {
+  background-color: #ffcc00;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btnEnviar:hover {
+  background-color: #e6b800;
+}

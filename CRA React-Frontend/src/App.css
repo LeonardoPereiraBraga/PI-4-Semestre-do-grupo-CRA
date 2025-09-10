@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #e3f2fd; /* Azul claro */
+}
+
+.login-container {
+  width: 350px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: #1976d2; /* Azul escuro */
+}
+
+.login-container input[type="email"],
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.login-container input[type="email"]:focus,
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border-color: #ff4081; /* Rosa */
+}
+
+.login-container button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background-color: #1976d2; /* Azul escuro */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #ff4081; /* Rosa */
+}
+
+.login-container .signup {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #1976d2; /* Azul escuro */
+}
+
+.login-container .signup a {
+  color: #ff4081; /* Rosa */
+  text-decoration: none;
+}
+
+.login-container .signup a:hover {
+  text-decoration: underline;
+}

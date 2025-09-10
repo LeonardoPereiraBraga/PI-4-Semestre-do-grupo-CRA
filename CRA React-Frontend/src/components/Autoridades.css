@@ -1,0 +1,61 @@
+#secao-contato-autoridades {
+  padding: 40px 20px;
+  background-color: var(--background-color);
+  padding-top: 100px;
+  margin-top: 350px;
+}
+
+.bloco-contato-autoridades {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.titulo-contato-autoridades {
+  text-align: center;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.texto-intro-contato {
+  text-align: center;
+  font-size: 1.1em;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+.grade-contatos-urgentes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.item-contato {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-left: 6px solid #e6b800;
+  padding: 20px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.item-contato:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-contato {
+  margin-top: 0;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.descricao-contato {
+  font-size: 0.95em;
+  margin: 10px 0 20px;
+}
+
+.info-contato {
+  font-size: 1em;
+  font-weight: bold;
+  color: #0066cc;
+}

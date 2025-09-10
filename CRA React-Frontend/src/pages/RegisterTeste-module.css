@@ -1,0 +1,239 @@
+/*Fonte externa importada*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+/*Variaveis globais*/
+:root {
+  --primary-color: #104559;
+  --secondary-color: #535354;
+  --background-color: #efefef;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --white-color: #fff;
+  --black-color: #000;
+  --input-border-color: #e3e4e6;
+  --transition-3s: 0.3s;
+}
+
+/*Padrão de estilização global*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+/*Bases para re-uso*/
+a {
+  text-decoration: none;
+  color: var(--black-color);
+  transition: var(--transition-3s);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--background-color);
+}
+
+/*Wrapper*/
+
+.wrapper {
+  position: relative;
+  height: 700px;
+  width: 430px;
+  background-color: var(--white-color);
+  border-radius: 15px;
+  padding: 120px 32px 64px;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 8px 15px var(--shadow-color);
+  transition: var(--transition-3s);
+  overflow: hidden;
+}
+
+/*Form Header*/
+.form-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  width: 140px;
+  background-color: var(--primary-color);
+  border-radius: 0 0 20px 20px;
+}
+
+.form-header::before,
+.form-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+}
+.form-header::before {
+  left: -30px;
+  border-top-right-radius: 50%;
+  box-shadow: 15px 0 0 var(--primary-color);
+}
+.form-header::after {
+  right: -30px;
+  border-top-left-radius: 50%;
+  box-shadow: -15px 0 0 var(--primary-color);
+}
+
+/*Logo CRA formulario de login*/
+#logob {
+  position: absolute;
+  top: 10px;
+  left: 93%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#logoc {
+  width: 40px;
+  height: 40px;
+}
+
+/*Titulos*/
+.titles {
+  position: relative;
+}
+.title-login,
+.title-cadastro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white-color);
+  font-size: 24px;
+  transition: var(--transition-3s);
+}
+.title-cadastro {
+  top: 50px;
+}
+
+/*Forms - Formularios*/
+.login-form,
+.cadastro-form {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  transition: var(--transition-3s);
+}
+.cadastro-form {
+  left: 150%;
+}
+
+/*Inputs - entrada de dados*/
+.input-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.input-field {
+  width: 100%;
+  height: 55px;
+  font-size: 16px;
+  background: transparent;
+  color: var(--black-color);
+  padding: 0 20px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 30px;
+  outline: none;
+  transition: var(--transition-3s);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: var(--secondary-color);
+  transition: 0.2s;
+  cursor: text;
+}
+.input-field:focus ~ .label,
+.input-field:valid ~ .label {
+  top: 0;
+  font-size: 14px;
+  background-color: var(--white-color);
+  color: var(var(--white-color));
+  padding: 0, 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--secondary-color);
+}
+
+/*Esqueci minha senha + Termos e condições*/
+
+.form-cols {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.col-1 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/*Botão para enviar form*/
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  font-size: 16px;
+  font-weight: 500px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition-3s);
+}
+.btn-submit:hover {
+  gap: 15px;
+}
+
+.btn-submit i {
+  font-size: 20px;
+}
+/*Switch form*/
+.switch-form {
+  text-align: center;
+}
+
+.switch-form a {
+  font-weight: 500;
+}
+
+/*Responsividade p' design form login*/
+
+@media only screen and (max-width: 564px) {
+  .wrapper {
+    margin: 20px;
+  }
+}

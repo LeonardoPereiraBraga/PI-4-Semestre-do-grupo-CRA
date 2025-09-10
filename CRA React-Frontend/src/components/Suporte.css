@@ -1,0 +1,115 @@
+.pagina-suporte {
+  max-width: 900px;
+  margin: auto;
+  margin-top: 130px;
+
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.pagina-suporte h1 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #004080;
+}
+
+.pagina-suporte h2 {
+  font-size: 1.8rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #004080;
+  font-weight: bold;
+}
+
+#texto-introducao {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.secao-faq {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 900px;
+}
+
+.item-faq {
+  margin-bottom: 25px;
+}
+
+.item-faq h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #0056a3;
+  font-weight: bold;
+}
+
+.item-faq p {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.item-faq a,
+.secao-contato a {
+  color: #0056a3;
+  text-decoration: underline;
+}
+
+.item-faq a:hover,
+.secao-contato a:hover {
+  text-decoration: none;
+}
+
+.secao-contato {
+  margin-top: 40px;
+  background-color: var(--background-color);
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.secao-contato h2 {
+  color: #004080;
+  margin-bottom: 15px;
+}
+
+.botao-suporte {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #005b8f;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.botao-suporte:hover {
+  background-color: #00416d;
+}
+
+@media (max-width: 600px) {
+  .pagina-suporte {
+    padding: 20px 15px;
+  }
+
+  .pagina-suporte h1 {
+    font-size: 1.6rem;
+  }
+
+  .pagina-suporte h2 {
+    font-size: 1.4rem;
+  }
+
+  .item-faq h3 {
+    font-size: 1.1rem;
+  }
+
+  .item-faq p {
+    font-size: 0.95rem;
+  }
+}
