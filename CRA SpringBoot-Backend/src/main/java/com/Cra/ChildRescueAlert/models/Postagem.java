@@ -1,6 +1,5 @@
 package com.Cra.ChildRescueAlert.models;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -9,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Document(collection = "postagens")
 @Getter
@@ -31,6 +29,6 @@ public class Postagem {
     private String informacoesAdicionais;
     private LocalDate data;
     private String status;
-    private Usuario usuarioPostagem;
+    private UsuarioPostagem usuarioPostagem;
     
 }

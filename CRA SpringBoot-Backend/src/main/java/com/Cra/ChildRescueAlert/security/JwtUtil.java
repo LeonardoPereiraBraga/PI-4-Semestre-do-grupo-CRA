@@ -1,53 +1,84 @@
 package com.Cra.ChildRescueAlert.security;
 
-import java.security.Key;
-import java.util.Date;
-
 import com.Cra.ChildRescueAlert.models.Usuario;
-import com.Cra.ChildRescueAlert.services.UsuarioService;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-@RequiredArgsConstructor
+import javax.crypto.SecretKey;
+import java.util.Date;
+
+@Component
 public class JwtUtil {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long EXPIRATION_TIME = 86400000;
+    @Value("${jwt.secret-key}")
+    private String secretKey;
 
-    public static String generateToken(String email) {
+    @Value("${jwt.expiration-time}")
+    private int expirationTime;
+
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
+    public String generateToken(Authentication authentication) {
+        Usuario principal = (Usuario) authentication.getPrincipal();
+
+
         return Jwts.builder()
-                .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .subject(principal.getEmail())
+                .issuedAt(new Date())
+                .expiration(new Date(new Date().getTime() + expirationTime))
+                .signWith(getSigningKey())
                 .compact();
     }
 
-    public static String extractEmail(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
-                    .parseClaimsJws(token).getBody().getSubject();
+    public String getUsernameFromToken(String token) {
+        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+            token = token.substring(7).trim();
+        }
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
     }
 
-    public static boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        }
-        catch(JwtException | IllegalArgumentException e) {
-            System.out.println("Erro ao validar token");
-            return false;
-        }
+    public String cleanBearerFromJwt(String token){
+            if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+                return token.substring(7).trim();
+            }
+            return null;
     }
-    public static String extractToken(HttpServletRequest request){
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer")) {
-            return "";
+
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(authToken);
+            return true;
+        } catch (MalformedJwtException e) {
+            logger.error("Token JWT inválido: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            logger.error("Token JWT expirado: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.error("Token JWT não suportado: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.error("JWT claims string está vazio: {}", e.getMessage());
         }
-        String token = authHeader.substring(7);  // Extrair o token
-        return token;
+        return false;
     }
 }

@@ -3,26 +3,23 @@ package com.Cra.ChildRescueAlert.services;
 import java.util.Optional;
 
 
+import com.Cra.ChildRescueAlert.exceptions.CredenciaisInvalidasException;
 import com.Cra.ChildRescueAlert.models.Usuario;
 import com.Cra.ChildRescueAlert.repositories.UsuarioRepository;
 import com.Cra.ChildRescueAlert.security.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
 
     public Usuario registrarUsuario(Usuario request) {
         String senhaCriptografada = passwordEncoder.encode(request.getPassword());
@@ -36,10 +33,24 @@ public class UsuarioService {
                 .build();
         return usuarioRepository.save(usuario);
     }
-    public Usuario findUserByToken(HttpServletRequest request) {
-        String token = JwtUtil.extractToken(request);
-        String email = JwtUtil.extractEmail(token);
-        Usuario usuario = this.buscarPorEmail(email).get();
+    public Usuario editar(Usuario request) {
+        String senhaCriptografada = passwordEncoder.encode(request.getPassword());
+        Usuario usuario = Usuario.builder()
+                .id(request.getId())
+                .username(request.getUsername())
+                .password(senhaCriptografada)
+                .CPF(request.getCPF())
+                .email(request.getEmail())
+                .telefone(request.getTelefone())
+                .fotoPerfil(request.getFotoPerfil())
+                .roles(request.getRoles())
+                .build();
+        return usuarioRepository.save(usuario);
+    }
+    public Usuario findUserByToken(String token) {
+        String email = jwtUtil.getUsernameFromToken(token);
+        Usuario usuario  = usuarioRepository.findByEmail(email).orElseThrow(() -> new CredenciaisInvalidasException("Usuario nao encontrado"));
+
         return usuario;
     }
 

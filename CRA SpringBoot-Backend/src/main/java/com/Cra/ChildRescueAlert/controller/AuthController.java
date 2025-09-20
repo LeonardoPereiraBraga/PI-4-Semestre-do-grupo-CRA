@@ -1,21 +1,18 @@
 package com.Cra.ChildRescueAlert.controller;
 
 
-import com.Cra.ChildRescueAlert.exceptions.CredenciaisInvalidasException;
-import com.Cra.ChildRescueAlert.exceptions.UsernameJáExisteException;
+import com.Cra.ChildRescueAlert.Dtos.JwtResponse;
+import com.Cra.ChildRescueAlert.Dtos.LoginRequest;
 import com.Cra.ChildRescueAlert.models.Usuario;
 import com.Cra.ChildRescueAlert.security.JwtUtil;
+import com.Cra.ChildRescueAlert.services.AuthService;
 import com.Cra.ChildRescueAlert.services.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -26,35 +23,43 @@ import org.springframework.http.ResponseEntity;
 public class AuthController {
 
     private final UsuarioService usuarioService;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthService authService;
+    private final JwtUtil jwtUtil;
 
-    //CrossOrigin pra funcionar o front end
-    @CrossOrigin(origins = "http://localhost:5173") // Permite CORS apenas para esta rota
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody Usuario request) {
-        if (!usuarioService.buscarPorEmail(request.getEmail()).isEmpty()){
-            throw new UsernameJáExisteException("Email já existente");
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            JwtResponse jwtResponse = authService.authenticate(loginRequest);
+            return ResponseEntity.ok(jwtResponse);
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            return ResponseEntity.badRequest().body(Map.of("status",404, "message", e.getMessage()));
         }
-        Usuario usuario = usuarioService.registrarUsuario(request);
-        return ResponseEntity.ok(usuario);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173") // Permite CORS apenas para esta rota
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
-        Optional<Usuario> usuario = usuarioService.buscarPorEmail(request.get("email"));
-        if (usuario.isPresent() && passwordEncoder.matches(request.get("password"), usuario.get().getPassword())) {
-            String token = JwtUtil.generateToken(usuario.get().getEmail());
-            return ResponseEntity.ok(Map.of("token", token));
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@Valid @RequestBody Usuario registerRequest) {
+        try {
+            String message = authService.registerUser(registerRequest);
+            return ResponseEntity.ok(message);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        throw new CredenciaisInvalidasException("Credenciais Incorretas");
+    }
+
+    @PostMapping("/teste")
+    public String retornarUser(@RequestHeader("Authorization") String token){
+        String tokenValido = token.substring(7);
+        System.out.println(tokenValido
+        );
+        return jwtUtil.getUsernameFromToken(tokenValido);
     }
     @CrossOrigin(origins = "http://localhost:5173") // Permite CORS apenas para esta rota
     @GetMapping("/dados")
     public ResponseEntity<Usuario> pegarUsuarioPeloToken(@RequestHeader("Authorization") String authorizationHeader) {
         // O token vem no formato "Bearer <TOKEN>"
         String token = authorizationHeader.replace("Bearer ", "");
-        return ResponseEntity.ok(usuarioService.buscarPorEmail(JwtUtil.extractEmail(token)).orElseThrow(() -> new UsernameNotFoundException("Usertoken nao encontrado")));
+        return ResponseEntity.ok(usuarioService.buscarPorEmail(jwtUtil.getUsernameFromToken(token)).orElseThrow(() -> new UsernameNotFoundException("Usertoken nao encontrado")));
     }
 
 
